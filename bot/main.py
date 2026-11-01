@@ -2,7 +2,6 @@
 Discord Bot
 """
 
-import os.path
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -21,19 +20,24 @@ TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 bot = commands.Bot(command_prefix="!", intents=Intents.all())
 hello = Hello()
 
+
 @bot.event
 async def on_member_join(member):
-    print(f"New Member Joined! Member Info: {member}")
+    """Run when a new member joins the Discord server."""
+    print(f"New Member Joined! {hello.get_greeting(member.name)}")
+
 
 # Slash command (/ping)
 @bot.tree.command(name="ping", description="Check bot latency")
 async def slash_ping(interaction):
+    """Check bot latency."""
     latency = round(bot.latency * 1000)
     await interaction.response.send_message(f"Pong! 🏓 ({latency}ms)")
-    
+
+
 @bot.event
 async def on_ready():
-    """Run when the bot initially loads"""
+    """Run when the bot initially loads."""
     await bot.tree.sync()
     try:
         hello.print_message(f"Hello World! Logged in as {bot.user}")
@@ -42,8 +46,10 @@ async def on_ready():
 
 
 def main():
+    """Start and run the Discord bot."""
     if not TOKEN:
-        raise ValueError("DISCORD_BOT_TOKEN is not set! Please add your bot token to .env or .env.local.")
+        raise ValueError(
+            "DISCORD_BOT_TOKEN is not set! Please add your bot token to .env or .env.local.")
     bot.run(TOKEN)
 
 
