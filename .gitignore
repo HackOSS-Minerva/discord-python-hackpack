@@ -1,8 +1,21 @@
+# Environment files (secrets)
 .env
 .env.local
 .env.*.local
-*.pyc
+
+# Python bytecode & cache
 __pycache__/
+*.py[cod]
+
+# Virtual environments
 .venv/
-poetry.lock
+env/
+venv/
+
+# Distribution / packaging
 dist/
+build/
+*.egg-info/
+
+# Package manager
+poetry.lock
