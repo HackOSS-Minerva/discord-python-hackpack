@@ -2,25 +2,27 @@
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
-## Python
+## Prerequisites
 
-Discord Python Hackpack runs on Python Version 3.14 and higher. Please ensure you have Python installed.
-
-## Poetry
-
-This project is built using [Poetry](https://python-poetry.org), a Python package and dependency manager. Please ensure you have Poetry installed using the [official installation guide](https://python-poetry.org/docs/#installation). You can also install Poetry via the following command:
+- Python 3.14 or higher
+- Install `uv`: https://docs.astral.sh/uv/getting-started/installation/
 
 ```bash
-# Linux, MacOS, Windows (WSL)
-curl -sSL https://install.python-poetry.org | python3 -
+# Linux / macOS / WSL
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ## Environment Variables
 
-The following environment variables are required and must be stored in an `.env` file:
+Copy the example environment file and add your Discord Bot Token:
 
+```bash
+cp .env.example .env
+```
+
+Set your token inside `.env`:
 ```env
-DISCORD_BOT_TOKEN=
+DISCORD_BOT_TOKEN=your_token_here
 ```
 
 ## Commands
@@ -28,40 +30,47 @@ DISCORD_BOT_TOKEN=
 ### Dependencies
 
 ```bash
-# Install dependencies
-poetry install
+# Install / sync dependencies
+uv sync --locked
 
-# Add dependency
-poetry add <dependency>
+# Add a dependency
+uv add <package>
 
-# Remove dependency
-poetry remove <dependency>
+# Add a development dependency
+uv add --dev <package>
+
+# Remove a dependency
+uv remove <package>
 ```
 
 ### Running the Bot Locally
 
 ```bash
-poetry run bot
+uv run bot
 ```
 
-### Formatting Code via YAPF
+### Formatting
 
 ```bash
-# Rewrite code recursively with proper formatting
-poetry run yapf -ir bot
+# Check formatting
+uv run ruff format --check .
 
-# Show formatting differences recursively
-poetry run yapf -dr bot
+# Format in-place
+uv run ruff format .
 ```
 
-### Linting Code via Pylint
+### Linting
 
 ```bash
-poetry run pylint bot
+# Check lint errors
+uv run ruff check .
+
+# Automatically fix fixable lint errors
+uv run ruff check --fix .
 ```
 
-### Build the Bot
+### Build
 
 ```bash
-poetry build
+uv build
 ```

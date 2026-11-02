@@ -3,22 +3,28 @@ Discord Bot
 """
 
 import os
-from dotenv import load_dotenv
-from discord.ext import commands
+
 from discord import Intents
-try:
-    from bot.hello import Hello
-except ImportError:
-    from hello import Hello
+from discord.ext import commands
+from dotenv import load_dotenv
 
-load_dotenv()
-if not os.getenv('DISCORD_BOT_TOKEN'):
-    load_dotenv('.env.local')
-
-TOKEN = os.getenv('DISCORD_BOT_TOKEN')
+from bot.hello import Hello
 
 bot = commands.Bot(command_prefix="!", intents=Intents.all())
-hello = Hello()
+
+
+def setup():
+    """Load environment variables and initialize helper services."""
+    load_dotenv()
+    if not os.getenv("DISCORD_BOT_TOKEN"):
+        load_dotenv(".env.local")
+
+    token = os.getenv("DISCORD_BOT_TOKEN")
+    hello_service = Hello()
+    return token, hello_service
+
+
+TOKEN, hello = setup()
 
 
 @bot.event
@@ -49,7 +55,8 @@ def main():
     """Start and run the Discord bot."""
     if not TOKEN:
         raise ValueError(
-            "DISCORD_BOT_TOKEN is not set! Please add your bot token to .env or .env.local.")
+            "DISCORD_BOT_TOKEN is not set! Please add your bot token to .env or .env.local."
+        )
     bot.run(TOKEN)
 
 

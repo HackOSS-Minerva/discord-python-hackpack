@@ -15,7 +15,5 @@ venv/
 # Distribution / packaging
 dist/
 build/
+wheels/
 *.egg-info/
-
-# Package manager
-poetry.lock
